@@ -1,0 +1,20 @@
+In SQLite, primary key is by default auto-increment.
+
+--------------------------------------------------------------------------------------------
+
+Static Nested Classes :  Behave very similar to a top-level class (which is embedded inside another
+top-level class.
+
+Static nested classes are accessed using the enclosing class name: OuterClass.StaticNestedClass
+
+To create an object for the static nested class : OuterClass.StaticNestedClass nestedObject =
+                                                  new OuterClass.StaticNestedClass();
+
+Note that using 'static' for a class is just a packaging convenience.
+
+--------------------------------------------------------------------------------------------
+
+SQLiteOpenHelper class has private constructor because we need only one instance of that class
+during entire run-time. That is why this class is created using 'Singleton class'. This is because
+this class provides connection to database as well. Our app is single user and only one db is
+required. Making multiple instances makes no sense.
