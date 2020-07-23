@@ -18,3 +18,11 @@ SQLiteOpenHelper class has private constructor because we need only one instance
 during entire run-time. That is why this class is created using 'Singleton class'. This is because
 this class provides connection to database as well. Our app is single user and only one db is
 required. Making multiple instances makes no sense.
+
+SQLiteOpenHelper class provides us with an object of SQLiteDatabase. Readable database should
+generally be declared final. Note that when we make call to "getWritableDatabase or
+getReadableDatabase", if the database has not been created, then db will be created by invoking
+constructor of SQLiteOpenHelper, thereafter onCreate method of OpenHelper will be called to create
+a table in the database.
+
+--------------------------------------------------------------------------------------------

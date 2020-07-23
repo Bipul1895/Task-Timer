@@ -9,8 +9,9 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 
 /**
- * Visibility of the class is "package-private" the only class that should use this class
+ * Visibility of the class is "package-private" because the only class that should use this class
  * is AppProvider which is Content Provider class that we will write for db access
+ * The class which uses it is {@link AppProvider}.
  */
 
 class AppDatabase extends SQLiteOpenHelper {
@@ -48,7 +49,12 @@ class AppDatabase extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         Log.d(TAG, "onCreate: starts");
 
-        String createSQL ="CREATE TABLE Tasks (_id INTEGER PRIMARY KEY NOT NULL, Name TEXT NOT NULL, Description TEXT, SortOrder INTEGER);";
+        String createSQL = "CREATE TABLE " + TasksContract.TABLE_NAME + " ("
+                            + TasksContract.Columns._ID + " INTEGER PRIMARY KEY NOT NULL, "
+                            + TasksContract.Columns.TASKS_NAME + " TEXT NOT NULL, "
+                            + TasksContract.Columns.TASKS_DESCRIPTION + " TEXT, "
+                            + TasksContract.Columns.TASKS_SORTORDER + " INTEGER);";
+
         sqLiteDatabase.execSQL(createSQL);
 
         Log.d(TAG, "onCreate: ends");
@@ -59,4 +65,5 @@ class AppDatabase extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
 
     }
+
 }

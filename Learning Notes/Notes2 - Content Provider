@@ -1,0 +1,41 @@
+AppProvider is our Content Provider here. This is the only class that should interact with our
+database class. This class will be used to read/write to our database.
+
+Content Provider is essentially a mechanism for "inter-process" communication to ensure secure
+communication. Content Provider abstracts out the way this communication happens.
+The app requesting for data, it doesn't care how data is stored in other app's resources.
+getContentResolver(). Content provider uses URI.
+
+The URI field must be public because not only our app, but other apps may also need data of
+our app. They access our content provider using this URI only.
+
+URI tells which table (even which row of table) of which package is being referred to.
+
+There are four parts of Content Provider URI :
+
+1) Prefix : Always set to "content://" (similar to https:// in URLs)
+2) Authority : Specifies name of content provider and it must be unique, that is why
+               we use it with package name, e.g. contacts, browser, etc. In our case,
+               it should be full name of app's package provider
+               (This has role similar to domain name that maps to an IP)
+               E.g. : org.example.TaskTimer.provider
+3) Path structure : In our example it would be the name of our table
+4) Content URI id : By convention, Content Provider uses _id column of table to provide access to
+                    a single row in the table. Providers actually match this _id to ID column of
+                    the tables to give the required row. Actually this is in sync with the fact that
+                    cursor adapter needs an _ID field in the table to work. Why? This is because
+                    when a user clicks an item on the list view, it is the position of the element
+                    in the list view that is matched to the _id of the database.
+
+UriMatcher : Utility class to aid in matching URIs in content providers.
+             This class matches to a table and also to rows of that table using its _id column.
+
+sURIMatcher.addURI("contacts", "people", PEOPLE);//Adding URI for the table
+
+sURIMatcher.addURI("contacts", "people/#", PEOPLE_ID);//Adding URI for the table row
+                                                      //# is used as place holder for +ve numbers
+
+Important : Content Provider is not an Activity, so "this" keyword can't be used to provide context.
+            Rather, content provider has access to method : "getContext()" which is used.
+
+Content provider should be specified inside the manifest file inside <application> tag.
